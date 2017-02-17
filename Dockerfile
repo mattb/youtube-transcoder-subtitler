@@ -19,3 +19,17 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
   rm -rf ${DIR}
 
 RUN pip install --upgrade youtube_dl
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app/
+RUN npm install
+
+COPY . /usr/src/app
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start" ]
