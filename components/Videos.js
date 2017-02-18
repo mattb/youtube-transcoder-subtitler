@@ -40,7 +40,7 @@ class Videos extends React.Component {
     if (this.state.working) {
       working = (
         <Card className="md-cell">
-          <CardTitle title="Progress log" />
+          <CardTitle title="I'm working on it..." />
           <CircularProgress key="progress" id="working" />
           <CardText>
             <Log url="/stream" />
@@ -53,13 +53,13 @@ class Videos extends React.Component {
           <CardTitle title="Download a video" />
           <CardText>
             Paste the YouTube URL here and press <em>enter</em>:
-          </CardText>
-          <CardActions>
+
+
             <VideoDownloader
               onUpload={this.updated}
               onUploadBegin={this.startSpinner}
             />
-          </CardActions>
+          </CardText>
         </Card>
       );
     }

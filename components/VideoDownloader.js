@@ -35,7 +35,7 @@ class VideoDownloader extends React.Component {
   render() {
     return (
       <form onSubmit={this.submit}>
-        Id: <input
+        <input
           type="text"
           name="id"
           ref={i => {
