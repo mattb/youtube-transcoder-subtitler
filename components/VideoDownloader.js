@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import parse from 'url-parse';
 
 const fetchVideo = gql`
 mutation fetchVideo($id: String!) {
@@ -17,10 +18,11 @@ class VideoDownloader extends React.Component {
   constructor() {
     super();
     this.submit = e => {
+      const url = parse(this.id.value, true);
       this.props.onUploadBegin();
       this.props.mutate({
         variables: {
-          id: this.id.value
+          id: url.query.v
         }
       }).then(result => {
         this.props.onUpload();

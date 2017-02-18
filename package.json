@@ -29,6 +29,7 @@
     "react-apollo": "^0.11.1",
     "react-dom": "^15.4.2",
     "redux": "^3.6.0",
+    "url-parse": "^1.1.7",
     "youtube-dl": "^1.11.1"
   }
 }
