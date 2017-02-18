@@ -37,6 +37,7 @@ class Videos extends React.Component {
         <img
           src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
           alt="working"
+          style={{ float: 'right' }}
         />
       );
     }
