@@ -1,14 +1,8 @@
 import React from 'react';
 import withData from '../lib/withData';
 
-import VideoList from '../components/VideoList';
-import VideoDownloader from '../components/VideoDownloader';
+import Videos from '../components/Videos';
 
-const Index = () => (
-  <div>
-    <VideoDownloader />
-    <VideoList />
-  </div>
-);
+const Index = () => <Videos />;
 
 export default withData(() => <Index />);
