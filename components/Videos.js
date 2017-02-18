@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import { Card, CardTitle, CardText, CardActions } from 'react-md/lib/Cards';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 import Log from '../components/Log';
 import VideoList from '../components/VideoList';
@@ -40,11 +41,7 @@ class Videos extends React.Component {
       working = (
         <Card className="md-cell">
           <CardTitle title="Progress log" />
-          <img
-            src="http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
-            alt="working"
-            style={{ float: 'right', width: '50px', height: '50px' }}
-          />
+          <CircularProgress key="progress" id="working" />
           <CardText>
             <Log url="/stream" />
           </CardText>
