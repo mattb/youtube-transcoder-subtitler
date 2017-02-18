@@ -17,8 +17,8 @@ app.prepare().then(() => {
   const streams = {};
   const server = express();
   const log = request => data => {
+    const myData = Object.assign({}, { timestamp: Date.now() }, data);
     if (request.session.id && request.session.id in streams) {
-      const myData = Object.assign({}, { timestamp: Date.now() }, data);
       streams[request.session.id].next(myData);
     }
   };
