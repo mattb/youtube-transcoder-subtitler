@@ -895,6 +895,10 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
+bluebird@^3.4.7:
+  version "3.4.7"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
+
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.6"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
@@ -1806,6 +1810,12 @@ hash.js@^1.0.0:
   dependencies:
     inherits "^2.0.1"
 
+hashish@~0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/hashish/-/hashish-0.0.4.tgz#6d60bc6ffaf711b6afd60e426d077988014e6554"
+  dependencies:
+    traverse ">=0.2.4"
+
 hawk@~3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/hawk/-/hawk-3.1.3.tgz#078444bd7c1640b0fe540d2c9b73d59678e8e1c4"
@@ -2667,6 +2677,10 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
+pipefy@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/pipefy/-/pipefy-0.1.1.tgz#275b1ebbea39619d3dca802d451ab1993267c98c"
+
 pkg-dir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-1.0.0.tgz#7a4b508a8d5bb2d629d447056ff4e9c9314cf3d4"
@@ -2961,7 +2975,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.79.0:
+request@^2.69.0, request@^2.79.0:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -3197,6 +3211,12 @@ stream-http@^2.3.1:
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
 
+streamify@~0.2.3:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/streamify/-/streamify-0.2.7.tgz#607c82c95455a72ce3815b94e0834aa36e03885f"
+  dependencies:
+    hashish "~0.0.4"
+
 string-hash@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/string-hash/-/string-hash-1.1.1.tgz#8e85bed291e0763b8f6809d9c3368fea048db3dc"
@@ -3322,6 +3342,10 @@ tough-cookie@~2.3.0:
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.2.tgz#f081f76e4c85720e6c37a5faced737150d84072a"
   dependencies:
     punycode "^1.4.1"
+
+traverse@>=0.2.4:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
 trim-right@^1.0.1:
   version "1.0.1"
@@ -3594,3 +3618,11 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+youtube-dl@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/youtube-dl/-/youtube-dl-1.11.1.tgz#c8e3b74951182dc5c58a0d1cd5be54b356271bd2"
+  dependencies:
+    mkdirp "^0.5.1"
+    request "^2.69.0"
+    streamify "~0.2.3"
