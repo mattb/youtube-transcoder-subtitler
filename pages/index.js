@@ -7,6 +7,7 @@ import Videos from '../components/Videos';
 const Index = () => (
   <div>
     <Head>
+      <link rel="icon" type="image/png" href="/static/favicon.png" />
       <link
         rel="stylesheet"
         href="/static/react-md.light_blue-yellow.min.css"
