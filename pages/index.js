@@ -1,13 +1,20 @@
 import React from 'react';
-import withData from '../lib/withData';
+import Head from 'next/head';
 
+import withData from '../lib/withData';
 import Videos from '../components/Videos';
-import Log from '../components/Log';
 
 const Index = () => (
   <div>
-    <Log url="/stream" />
-    <Videos />
+    <Head>
+      <link
+        rel="stylesheet"
+        href="/static/react-md.light_blue-yellow.min.css"
+      />
+    </Head>
+    <div>
+      <Videos />
+    </div>
   </div>
 );
 

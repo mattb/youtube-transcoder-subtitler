@@ -49,7 +49,11 @@ class Log extends React.Component {
 
   render() {
     return (
-      <div>{this.state.events.map(event => <LogLine event={event} />)}</div>
+      <div>
+        {this.state.events.map(event => (
+          <LogLine key={event.timestamp} event={event} />
+        ))}
+      </div>
     );
   }
 }

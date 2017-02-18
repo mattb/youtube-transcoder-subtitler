@@ -1,12 +1,13 @@
 import React from 'react';
+import Media from 'react-md/lib/Media/Media';
+import { Card, CardTitle } from 'react-md/lib/Cards';
 
 const VideoList = ({ files }) => (
-  <ul>
+  <div className="md-grid">
     {files.map(file => (
-      <li key={file.id}>
-        <p>
-          <a href={file.url} download={`${file.id}.mp4`}>{file.title}</a>:
-          <br /><br />
+      <Card className="md-cell" key={file.id}>
+        <CardTitle title={file.title} />
+        <Media>
           <video
             src={file.url}
             poster={file.thumbnail}
@@ -14,10 +15,10 @@ const VideoList = ({ files }) => (
             controls="true"
             style={{ width: '320px', height: '180px' }}
           />
-        </p>
-      </li>
+        </Media>
+      </Card>
     ))}
-  </ul>
+  </div>
 );
 
 VideoList.propTypes = {
