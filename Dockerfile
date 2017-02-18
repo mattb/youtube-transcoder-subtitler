@@ -23,8 +23,9 @@ RUN pip install --upgrade youtube_dl
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package.json /usr/src/app/
-RUN npm install -g yarn && yarn install
+RUN npm install -g yarn 
+COPY yarn.lock package.json /usr/src/app/
+RUN yarn install
 
 COPY . /usr/src/app
 
