@@ -1,8 +1,9 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 
-import { Card, CardTitle, CardText, CardActions } from 'react-md/lib/Cards';
+import { Card, CardTitle, CardText } from 'react-md/lib/Cards';
 import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 import Log from '../components/Log';
@@ -34,6 +35,7 @@ class Videos extends React.Component {
   }
 
   render() {
+    console.log('VIDEOS', this.props);
     const { data } = this.props;
     let working = <span />;
     let downloader = <span />;
@@ -52,6 +54,11 @@ class Videos extends React.Component {
         <Card className="md-cell">
           <CardTitle title="Download a video" />
           <CardText>
+            <a tabIndex="0" onClick={this.props.onClick}>
+              Test redux {this.props.counter}
+            </a>
+            <br />
+
             Paste the YouTube URL here and press <em>enter</em>:
 
 
@@ -85,10 +92,18 @@ class Videos extends React.Component {
 }
 
 Videos.propTypes = {
+  onClick: React.PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     loading: React.PropTypes.bool.isRequired,
     refetch: React.PropTypes.func.isRequired
   }).isRequired
 };
 
-export default graphql(videoQuery)(Videos);
+export default connect(
+  state => ({
+    counter: state.counter
+  }),
+  dispatch => ({
+    onClick: () => dispatch({ type: 'INCREMENT' })
+  })
+)(graphql(videoQuery)(Videos));
