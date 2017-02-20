@@ -2,10 +2,10 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import { Card, CardText, CardActions } from 'react-md/lib/Cards';
+import { Card, CardText } from 'react-md/lib/Cards';
 import { Button } from 'react-md/lib/Buttons';
 
-const subtitleVideo = gql`
+const subtitleVideoMutation = gql`
 mutation subtitleVideo($id: String!) {
   enqueueSubtitle(id:$id) {
     id
@@ -13,7 +13,15 @@ mutation subtitleVideo($id: String!) {
 }
 `;
 
-const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
+const deleteFileMutation = gql`
+mutation DeleteFile($id: String!) {
+  deleteFile(id:$id)
+}
+`;
+
+const VideoList = (
+  { files, deleteFile, subtitleVideo, jobStart, hideButtons, newVideos }
+) => (
   <div className="md-grid">
     {files.map(file => (
       <Card className="md-cell" key={file.id}>
@@ -43,7 +51,7 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
             <Button
               raised
               label="Subtitle it!"
-              onClick={() => mutate({
+              onClick={() => subtitleVideo({
                 variables: {
                   id: file.id
                 }
@@ -51,6 +59,17 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
                 jobStart(data.enqueueSubtitle.id);
               })}
             />}
+          <Button
+            raised
+            label="Delete it!"
+            onClick={() => deleteFile({
+              variables: {
+                id: file.id
+              }
+            }).then(() => {
+              newVideos(file.id);
+            })}
+          />
         </CardText>
       </Card>
     ))}
@@ -65,13 +84,20 @@ VideoList.propTypes = {
       url: React.PropTypes.string.isRequired,
       thumbnail: React.PropTypes.string.isRequired
     })).isRequired,
-  mutate: React.PropTypes.func.isRequired,
-  jobStart: React.PropTypes.func.isRequired
+  deleteFile: React.PropTypes.func.isRequired,
+  subtitleVideo: React.PropTypes.func.isRequired,
+  jobStart: React.PropTypes.func.isRequired,
+  newVideos: React.PropTypes.func.isRequired
 };
 VideoList.defaultProps = {
   hideButtons: false
 };
 
+const VideoListWithData = graphql(deleteFileMutation, { name: 'deleteFile' })(
+  graphql(subtitleVideoMutation, { name: 'subtitleVideo' })(VideoList)
+);
+
 export default connect(undefined, dispatch => ({
-  jobStart: id => dispatch({ type: 'JOB_START', payload: id })
-}))(graphql(subtitleVideo)(VideoList));
+  jobStart: id => dispatch({ type: 'JOB_START', payload: id }),
+  newVideos: id => dispatch({ type: 'NEW_VIDEOS', payload: id })
+}))(VideoListWithData);

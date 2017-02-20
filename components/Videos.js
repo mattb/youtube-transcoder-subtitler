@@ -22,8 +22,8 @@ query Files {
 `;
 
 class Videos extends React.Component {
-  componentWillReceiveProps({ data, working }) {
-    if (this.props.working && !working) {
+  componentWillReceiveProps({ data, videoListVersion }) {
+    if (this.props.videoListVersion !== videoListVersion) {
       data.refetch();
     }
   }
@@ -70,6 +70,7 @@ Videos.propTypes = {
     refetch: React.PropTypes.func.isRequired
   }).isRequired,
   working: React.PropTypes.bool.isRequired,
+  videoListVersion: React.PropTypes.number.isRequired,
   job_id: React.PropTypes.number
 };
 
@@ -80,6 +81,7 @@ Videos.defaultProps = {
 export default connect(
   state => {
     const jobState = {
+      videoListVersion: state.videos.version,
       working: state.jobqueue.job_ids.length > 0
     };
     if (jobState.working) {
