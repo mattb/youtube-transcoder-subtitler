@@ -38,8 +38,6 @@ class Videos extends React.Component {
         <Card className="md-cell">
           <CardTitle title="Download a video" />
           <CardText>
-            Paste the YouTube URL here and press <em>enter</em>:
-
             <VideoDownloader />
           </CardText>
         </Card>

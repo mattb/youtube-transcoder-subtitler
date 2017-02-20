@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import parse from 'url-parse';
+import TextField from 'react-md/lib/TextFields';
 
 const fetchVideo = gql`
 mutation fetchVideo($id: String!) {
@@ -16,7 +17,10 @@ class VideoDownloader extends React.Component {
   constructor() {
     super();
     this.submit = e => {
-      const url = parse(this.id.value, true);
+      e.preventDefault();
+      const field = this.urlField.getField();
+      const url = parse(field.value, true);
+      field.value = '';
       this.props.mutate({
         variables: {
           id: url.query.v
@@ -24,20 +28,18 @@ class VideoDownloader extends React.Component {
       }).then(({ data }) => {
         this.props.jobStart(data.enqueueDownload.id);
       });
-      this.id.value = '';
-      e.preventDefault();
     };
   }
   render() {
     return (
       <div>
         <form onSubmit={this.submit}>
-          <input
-            type="text"
-            name="id"
-            ref={i => {
-              this.id = i;
+          <TextField
+            id="url"
+            ref={field => {
+              this.urlField = field;
             }}
+            label="Paste the YouTube URL here"
           />
         </form>
       </div>

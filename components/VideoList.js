@@ -20,9 +20,9 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
         <CardText>
           <h3
             style={{
-              'white-space': 'nowrap',
+              whiteSpace: 'nowrap',
               overflow: 'hidden',
-              'text-overflow': 'ellipsis'
+              textOverflow: 'ellipsis'
             }}
           >
             {file.title}
@@ -38,10 +38,8 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
             <a href={file.subtitled_url} download={`${file.id}_subbed.mp4`}>
               <Button raised label="Download subtitled version" />
             </a>}
-        </CardText>
-        {!hideButtons &&
-          !file.subtitled_url &&
-          <CardActions>
+          {!hideButtons &&
+            !file.subtitled_url &&
             <Button
               raised
               label="Subtitle it!"
@@ -52,8 +50,8 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
               }).then(({ data }) => {
                 jobStart(data.enqueueSubtitle.id);
               })}
-            />
-          </CardActions>}
+            />}
+        </CardText>
       </Card>
     ))}
   </div>

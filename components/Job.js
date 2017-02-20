@@ -51,6 +51,7 @@ class Job extends React.Component {
         {!data.loading &&
           <div>
             <LinearProgress
+              query
               key="progress"
               id="working"
               value={data.job.progress && parseInt(data.job.progress, 10)}
