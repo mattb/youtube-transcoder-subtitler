@@ -20,11 +20,28 @@ query Job($id:Int!) {
 `;
 
 class Job extends React.Component {
+  componentDidMount() {
+    this.refetchInterval = setInterval(
+      () => {
+        this.props.data.refetch();
+      },
+      1000
+    );
+  }
   componentWillReceiveProps(nextProps) {
+    const oldData = this.props.data;
     const { data, jobFinished } = nextProps;
-    if (!data.loading && data.job.state === 'complete') {
+    if (
+      !data.loading &&
+        data.job.state === 'complete' &&
+        data.job.state !== oldData.job.state
+    ) {
       jobFinished(data.job.id);
     }
+  }
+  componentWillUnmount() {
+    clearInterval(this.refetchInterval);
+    delete this.refetchInterval;
   }
   render() {
     const { data } = this.props;
@@ -48,13 +65,14 @@ class Job extends React.Component {
 }
 Job.propTypes = {
   data: React.PropTypes.shape({
-    loading: React.PropTypes.bool.isRequired
+    loading: React.PropTypes.bool.isRequired,
+    refetch: React.PropTypes.func.isRequired
   }).isRequired,
   jobFinished: React.PropTypes.func.isRequired
 };
 
+const JobWithData = graphql(jobQuery)(Job);
+
 export default connect(undefined, dispatch => ({
   jobFinished: id => dispatch({ type: 'JOB_FINISH', payload: id })
-}))(graphql(jobQuery, {
-    options: { pollInterval: 1000 }
-  })(Job));
+}))(JobWithData);
