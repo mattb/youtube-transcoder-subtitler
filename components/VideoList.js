@@ -3,7 +3,7 @@ import Media from 'react-md/lib/Media/Media';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import { Card, CardTitle, CardActions } from 'react-md/lib/Cards';
+import { Card, CardTitle, CardText, CardActions } from 'react-md/lib/Cards';
 import { Button } from 'react-md/lib/Buttons';
 
 const subtitleVideo = gql`
@@ -29,16 +29,11 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
           />
         </Media>
         {file.subtitled_url &&
-          <Media>
-            <h4>Subtitled version:</h4>
-            <video
-              src={file.subtitled_url}
-              poster={file.thumbnail}
-              type="video/mp4"
-              controls="true"
-              style={{ width: '320px', height: '180px' }}
-            />
-          </Media>}
+          <CardText>
+            <a href={file.subtitled_url} download={`${file.id}_subbed.mp4`}>
+              <Button raised label="Download subtitled version" />
+            </a>
+          </CardText>}
         {!hideButtons &&
           !file.subtitled_url &&
           <CardActions>
