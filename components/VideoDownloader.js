@@ -1,15 +1,13 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import parse from 'url-parse';
 
 const fetchVideo = gql`
 mutation fetchVideo($id: String!) {
-  download(id:$id) {
+  enqueueDownload(id:$id) {
     id
-    url
-    title
-    thumbnail
   }
 }
 `;
@@ -19,37 +17,39 @@ class VideoDownloader extends React.Component {
     super();
     this.submit = e => {
       const url = parse(this.id.value, true);
-      this.props.onUploadBegin();
       this.props.mutate({
         variables: {
           id: url.query.v
         }
-      }).then(result => {
-        this.props.onUpload();
-        console.log('RESULT', this.id.value, result);
+      }).then(({ data }) => {
+        this.props.jobStart(data.enqueueDownload.id);
       });
       this.id.value = '';
       e.preventDefault();
     };
   }
   render() {
+    console.log('VIDEO DOWNLOADER', this.props);
     return (
-      <form onSubmit={this.submit}>
-        <input
-          type="text"
-          name="id"
-          ref={i => {
-            this.id = i;
-          }}
-        />
-      </form>
+      <div>
+        <form onSubmit={this.submit}>
+          <input
+            type="text"
+            name="id"
+            ref={i => {
+              this.id = i;
+            }}
+          />
+        </form>
+      </div>
     );
   }
 }
 VideoDownloader.propTypes = {
   mutate: React.PropTypes.func.isRequired,
-  onUpload: React.PropTypes.func.isRequired,
-  onUploadBegin: React.PropTypes.func.isRequired
+  jobStart: React.PropTypes.func.isRequired
 };
 
-export default graphql(fetchVideo)(VideoDownloader);
+export default connect(undefined, dispatch => ({
+  jobStart: id => dispatch({ type: 'JOB_START', payload: id })
+}))(graphql(fetchVideo)(VideoDownloader));
