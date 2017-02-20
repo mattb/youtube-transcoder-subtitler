@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const next = require('next');
 const bodyParser = require('body-parser');
 const { graphqlExpress } = require('graphql-server-express');
@@ -13,6 +14,8 @@ const jobs = require('./lib/jobs');
 
 app.prepare().then(() => {
   const server = express();
+
+  server.use(compression());
 
   server.use('/kue', jobs.app);
 
