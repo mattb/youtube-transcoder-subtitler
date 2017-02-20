@@ -1,9 +1,8 @@
 import React from 'react';
-import Media from 'react-md/lib/Media/Media';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import { Card, CardTitle, CardText, CardActions } from 'react-md/lib/Cards';
+import { Card, CardText, CardActions } from 'react-md/lib/Cards';
 import { Button } from 'react-md/lib/Buttons';
 
 const subtitleVideo = gql`
@@ -18,22 +17,28 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
   <div className="md-grid">
     {files.map(file => (
       <Card className="md-cell" key={file.id}>
-        <CardTitle title={file.title} />
-        <Media>
+        <CardText>
+          <h3
+            style={{
+              'white-space': 'nowrap',
+              overflow: 'hidden',
+              'text-overflow': 'ellipsis'
+            }}
+          >
+            {file.title}
+          </h3>
           <video
             src={file.url}
             poster={file.thumbnail}
             type="video/mp4"
             controls="true"
-            style={{ width: '320px', height: '180px' }}
+            style={{ width: '100%' }}
           />
-        </Media>
-        {file.subtitled_url &&
-          <CardText>
+          {file.subtitled_url &&
             <a href={file.subtitled_url} download={`${file.id}_subbed.mp4`}>
               <Button raised label="Download subtitled version" />
-            </a>
-          </CardText>}
+            </a>}
+        </CardText>
         {!hideButtons &&
           !file.subtitled_url &&
           <CardActions>
