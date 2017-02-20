@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: transcoder:web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - PORT=3000
+      - REDIS_URL=redis://db:6379
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
+
+  worker:
+    build: 
+      context: .
+      dockerfile: ./worker/Dockerfile
+    image: transcoder:worker
+    depends_on:
+      - db
+    environment:
+      - REDIS_URL=redis://db:6379
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
+
+  db:
+    image: redis

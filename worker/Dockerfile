@@ -1,2 +1,2 @@
-FROM registry.heroku.com/mattb-transcoder/web
+FROM transcoder:web
 CMD ["npm", "run", "worker" ]
