@@ -20,6 +20,8 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 
 RUN pip install --upgrade youtube_dl
 
+RUN mkdir -p /usr/share/fonts/truetype/msttcorefonts && apk add msttcorefonts-installer --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted && update-ms-fonts && fc-cache -f
+
 EXPOSE 3000
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
