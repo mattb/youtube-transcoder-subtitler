@@ -29,7 +29,6 @@ class VideoDownloader extends React.Component {
     };
   }
   render() {
-    console.log('VIDEO DOWNLOADER', this.props);
     return (
       <div>
         <form onSubmit={this.submit}>

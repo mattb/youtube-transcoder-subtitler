@@ -22,7 +22,6 @@ query Job($id:Int!) {
 class Job extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { data, jobFinished } = nextProps;
-    console.log('JOB', nextProps);
     if (!data.loading && data.job.state === 'complete') {
       jobFinished(data.job.id);
     }

@@ -28,7 +28,6 @@ class Videos extends React.Component {
     }
   }
   render() {
-    console.log('VIDEO PROPS', this.props);
     const { data } = this.props;
     let working = <span />;
     let downloader = <span />;

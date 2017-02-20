@@ -60,7 +60,7 @@ const VideoList = ({ files, mutate, jobStart, hideButtons }) => (
 );
 
 VideoList.propTypes = {
-  hideButtons: React.PropTypes.boolean,
+  hideButtons: React.PropTypes.bool,
   files: React.PropTypes.arrayOf(React.PropTypes.shape({
       id: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,
