@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { Card, CardTitle, CardText } from 'react-md/lib/Cards';
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
 
+import actions from '../lib/actions';
+
 const jobQuery = gql`
 query Job($id:Int!) {
   job(id: $id) {
@@ -75,5 +77,5 @@ Job.propTypes = {
 const JobWithData = graphql(jobQuery)(Job);
 
 export default connect(undefined, dispatch => ({
-  jobFinished: id => dispatch({ type: 'JOB_FINISH', payload: id })
+  jobFinished: id => dispatch(actions.jobFinish(id))
 }))(JobWithData);

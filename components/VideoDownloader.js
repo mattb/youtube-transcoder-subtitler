@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import parse from 'url-parse';
 import TextField from 'react-md/lib/TextFields';
+import actions from '../lib/actions';
 
 const fetchVideo = gql`
 mutation fetchVideo($id: String!) {
@@ -52,5 +53,5 @@ VideoDownloader.propTypes = {
 };
 
 export default connect(undefined, dispatch => ({
-  jobStart: id => dispatch({ type: 'JOB_START', payload: id })
+  jobStart: id => dispatch(actions.jobStart(id))
 }))(graphql(fetchVideo)(VideoDownloader));

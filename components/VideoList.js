@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Card, CardText } from 'react-md/lib/Cards';
 import { Button } from 'react-md/lib/Buttons';
+import actions from '../lib/actions';
 
 const subtitleVideoMutation = gql`
 mutation subtitleVideo($id: String!) {
@@ -67,7 +68,7 @@ const VideoList = (
                 id: file.id
               }
             }).then(() => {
-              newVideos(file.id);
+              newVideos();
             })}
           />
         </CardText>
@@ -98,6 +99,6 @@ const VideoListWithData = graphql(deleteFileMutation, { name: 'deleteFile' })(
 );
 
 export default connect(undefined, dispatch => ({
-  jobStart: id => dispatch({ type: 'JOB_START', payload: id }),
-  newVideos: id => dispatch({ type: 'NEW_VIDEOS', payload: id })
+  jobStart: id => dispatch(actions.jobStart(id)),
+  newVideos: () => dispatch(actions.newVideos())
 }))(VideoListWithData);
