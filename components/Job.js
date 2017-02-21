@@ -77,5 +77,5 @@ Job.propTypes = {
 const JobWithData = graphql(jobQuery)(Job);
 
 export default connect(undefined, dispatch => ({
-  jobFinished: id => dispatch(actions.jobFinish(id))
+  jobFinished: id => dispatch(actions.jobFinishWithNewVideos(id))
 }))(JobWithData);
