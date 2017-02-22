@@ -1,28 +1,10 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Card, CardText } from 'react-md/lib/Cards';
 import { Button } from 'react-md/lib/Buttons';
 import actions from '../lib/actions';
 
-const subtitleVideoMutation = gql`
-mutation subtitleVideo($id: String!) {
-  enqueueSubtitle(id:$id) {
-    id
-  }
-}
-`;
-
-const deleteFileMutation = gql`
-mutation DeleteFile($id: String!) {
-  deleteFile(id:$id)
-}
-`;
-
-const VideoList = (
-  { files, deleteFile, subtitleVideo, jobStart, hideButtons, newVideos }
-) => (
+const VideoList = ({ files, deleteFile, subtitleVideo, hideButtons }) => (
   <div className="md-grid">
     {files.map(file => (
       <Card className="md-cell" key={file.id}>
@@ -52,24 +34,12 @@ const VideoList = (
             <Button
               raised
               label="Subtitle it!"
-              onClick={() => subtitleVideo({
-                variables: {
-                  id: file.id
-                }
-              }).then(({ data }) => {
-                jobStart(data.enqueueSubtitle.id);
-              })}
+              onClick={() => subtitleVideo(file.id)}
             />}
           <Button
             raised
             label="Delete it!"
-            onClick={() => deleteFile({
-              variables: {
-                id: file.id
-              }
-            }).then(() => {
-              newVideos();
-            })}
+            onClick={() => deleteFile(file.id)}
           />
         </CardText>
       </Card>
@@ -86,19 +56,13 @@ VideoList.propTypes = {
       thumbnail: React.PropTypes.string.isRequired
     })).isRequired,
   deleteFile: React.PropTypes.func.isRequired,
-  subtitleVideo: React.PropTypes.func.isRequired,
-  jobStart: React.PropTypes.func.isRequired,
-  newVideos: React.PropTypes.func.isRequired
+  subtitleVideo: React.PropTypes.func.isRequired
 };
 VideoList.defaultProps = {
   hideButtons: false
 };
 
-const VideoListWithData = graphql(deleteFileMutation, { name: 'deleteFile' })(
-  graphql(subtitleVideoMutation, { name: 'subtitleVideo' })(VideoList)
-);
-
 export default connect(undefined, dispatch => ({
-  jobStart: id => dispatch(actions.jobStart(id)),
-  newVideos: () => dispatch(actions.newVideos())
-}))(VideoListWithData);
+  deleteFile: id => dispatch(actions.deleteFile(id)),
+  subtitleVideo: id => dispatch(actions.subtitleVideo(id))
+}))(VideoList);

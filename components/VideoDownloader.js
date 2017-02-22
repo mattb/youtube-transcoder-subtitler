@@ -1,18 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import parse from 'url-parse';
 import TextField from 'react-md/lib/TextFields';
 import actions from '../lib/actions';
-
-const fetchVideo = gql`
-mutation fetchVideo($id: String!) {
-  enqueueDownload(id:$id) {
-    id
-  }
-}
-`;
 
 class VideoDownloader extends React.Component {
   constructor() {
@@ -22,13 +12,7 @@ class VideoDownloader extends React.Component {
       const field = this.urlField.getField();
       const url = parse(field.value, true);
       field.value = '';
-      this.props.mutate({
-        variables: {
-          id: url.query.v
-        }
-      }).then(({ data }) => {
-        this.props.jobStart(data.enqueueDownload.id);
-      });
+      this.props.downloadVideo(url.query.v);
     };
   }
   render() {
@@ -48,10 +32,9 @@ class VideoDownloader extends React.Component {
   }
 }
 VideoDownloader.propTypes = {
-  mutate: React.PropTypes.func.isRequired,
-  jobStart: React.PropTypes.func.isRequired
+  downloadVideo: React.PropTypes.func.isRequired
 };
 
 export default connect(undefined, dispatch => ({
-  jobStart: id => dispatch(actions.jobStart(id))
-}))(graphql(fetchVideo)(VideoDownloader));
+  downloadVideo: id => dispatch(actions.downloadVideo(id))
+}))(VideoDownloader);
