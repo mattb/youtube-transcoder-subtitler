@@ -79,17 +79,10 @@ Videos.defaultProps = {
 };
 
 export default connect(
-  state => {
-    const jobState = {
-      videoListVersion: state.videos.version,
-      working: state.jobqueue.job_ids.length > 0
-    };
-    if (jobState.working) {
-      return Object.assign({}, jobState, {
-        job_id: state.jobqueue.job_ids[0]
-      });
-    }
-    return jobState;
-  },
+  state => ({
+    videoListVersion: state.videos.version,
+    working: state.jobqueue.working,
+    job_id: state.jobqueue.current_job_id
+  }),
   undefined
 )(graphql(videoQuery)(Videos));
