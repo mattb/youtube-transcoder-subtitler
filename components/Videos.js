@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { Card, CardTitle, CardText } from 'react-md/lib/Cards';
 
+import { workingSelector, currentJobIdSelector } from '../lib/selectors';
 import Job from '../components/Job';
 import VideoList from '../components/VideoList';
 import VideoDownloader from '../components/VideoDownloader';
@@ -81,8 +82,8 @@ Videos.defaultProps = {
 export default connect(
   state => ({
     videoListVersion: state.videos.version,
-    working: state.jobqueue.working,
-    job_id: state.jobqueue.current_job_id
+    working: workingSelector(state),
+    job_id: currentJobIdSelector(state)
   }),
   undefined
 )(graphql(videoQuery)(Videos));
