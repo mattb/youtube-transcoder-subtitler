@@ -17,6 +17,7 @@ query Files {
     url
     subtitled_url
     title
+    uploader
     thumbnail
   }
 }

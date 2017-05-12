@@ -18,6 +18,9 @@ const VideoList = ({ files, deleteFile, subtitleVideo, hideButtons }) => (
           >
             {file.title}
           </h3>
+          <h5>
+            {file.uploader}
+          </h5>
           <video
             src={file.url}
             poster={file.thumbnail}
@@ -49,12 +52,14 @@ const VideoList = ({ files, deleteFile, subtitleVideo, hideButtons }) => (
 
 VideoList.propTypes = {
   hideButtons: React.PropTypes.bool,
-  files: React.PropTypes.arrayOf(React.PropTypes.shape({
+  files: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
       id: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,
       url: React.PropTypes.string.isRequired,
       thumbnail: React.PropTypes.string.isRequired
-    })).isRequired,
+    })
+  ).isRequired,
   deleteFile: React.PropTypes.func.isRequired,
   subtitleVideo: React.PropTypes.func.isRequired
 };
